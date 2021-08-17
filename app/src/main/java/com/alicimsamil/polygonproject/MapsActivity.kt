@@ -39,7 +39,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMapLong
             }
             else{
                 points.removeLast()
-                mMap.clear()
                 drawPolygon(points)
             }
         }
@@ -51,34 +50,28 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMapLong
         mMap = googleMap
         mMap.setOnMapLongClickListener(this)
 
-
     }
 
+
+
     private fun drawPolygon(corners: ArrayList<LatLng>){
+        mMap.clear()
         points.forEach {
             mMap.addMarker(MarkerOptions().position(it))
         }
-
         val polygon = PolygonOptions()
-                        corners.forEach {
-                            polygon.add(it)
-                        }
+        corners.forEach {
+            polygon.add(it)
+        }
         polygon.fillColor(R.color.purple_700)
         mMap.addPolygon(polygon)
-
-
     }
 
 
+
     override fun onMapLongClick(p0: LatLng) {
-        mMap.addMarker(MarkerOptions().position(p0))
         points.add(p0)
-        if (points.size>2){
-        mMap.clear()
         drawPolygon(points)
-
-        }
-
     }
 }
 
