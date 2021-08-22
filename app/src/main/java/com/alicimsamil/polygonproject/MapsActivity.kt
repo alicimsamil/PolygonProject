@@ -4,16 +4,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
-import androidx.lifecycle.MutableLiveData
-
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.alicimsamil.polygonproject.databinding.ActivityMapsBinding
-import com.google.android.gms.maps.model.ButtCap
 import com.google.android.gms.maps.model.PolygonOptions
 import com.google.maps.android.SphericalUtil
 
@@ -63,7 +59,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMapLong
             mMap.addMarker(MarkerOptions().position(it))
             polygon.add(it)
         }
-        findViewById<TextView>(R.id.squareFeet).text="${SphericalUtil.computeArea(points)}"
+        findViewById<TextView>(R.id.squareFeet).text="Area: ${SphericalUtil.computeArea(points)}"
         polygon.fillColor(R.color.purple_700)
         mMap.addPolygon(polygon)
     }
