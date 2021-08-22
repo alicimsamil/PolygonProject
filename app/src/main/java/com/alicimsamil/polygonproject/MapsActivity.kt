@@ -3,6 +3,7 @@ package com.alicimsamil.polygonproject
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 import androidx.lifecycle.MutableLiveData
 
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -14,6 +15,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.alicimsamil.polygonproject.databinding.ActivityMapsBinding
 import com.google.android.gms.maps.model.ButtCap
 import com.google.android.gms.maps.model.PolygonOptions
+import com.google.maps.android.SphericalUtil
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMapLongClickListener {
 
@@ -39,7 +41,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMapLong
             }
             else{
                 points.removeLast()
-                drawPolygon(points)
+                drawPolygon()
             }
         }
 
@@ -54,15 +56,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMapLong
 
 
 
-    private fun drawPolygon(corners: ArrayList<LatLng>){
+    private fun drawPolygon(){
         mMap.clear()
+        val polygon = PolygonOptions()
         points.forEach {
             mMap.addMarker(MarkerOptions().position(it))
-        }
-        val polygon = PolygonOptions()
-        corners.forEach {
             polygon.add(it)
         }
+        findViewById<TextView>(R.id.squareFeet).text="${SphericalUtil.computeArea(points)}"
         polygon.fillColor(R.color.purple_700)
         mMap.addPolygon(polygon)
     }
@@ -71,7 +72,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,GoogleMap.OnMapLong
 
     override fun onMapLongClick(p0: LatLng) {
         points.add(p0)
-        drawPolygon(points)
+        drawPolygon()
     }
 }
 
